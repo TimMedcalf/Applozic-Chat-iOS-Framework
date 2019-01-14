@@ -75,7 +75,9 @@
     [self.segmentControl setTitle:  NSLocalizedStringWithDefaultValue(@"contactsTitle", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Contacts" , @"") forSegmentAtIndex:0];
     
     [self.segmentControl setTitle:  NSLocalizedStringWithDefaultValue(@"groupsTitle", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Groups" , @"") forSegmentAtIndex:1];
-    
+
+    [self.segmentControl setUserInteractionEnabled:NO];
+
     self.contactList = [NSMutableArray new];
     [self handleFrameForOrientation];
     
@@ -137,6 +139,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self fetchConversationsGroupByContactId];
         self.alChannelsList = [NSMutableArray arrayWithArray:[alChannelDBService getAllChannelKeyAndName]];
+        [self.segmentControl setUserInteractionEnabled:([self.alChannelsList count] > 0)];
     });
 }
 
@@ -145,6 +148,7 @@
     ALChannelDBService * alChannelDBService = [[ALChannelDBService alloc] init];
     dispatch_async(dispatch_get_main_queue(), ^{
         self.alChannelsList = [NSMutableArray arrayWithArray:[alChannelDBService getAllChannelKeyAndName]];
+        [self.segmentControl setUserInteractionEnabled:([self.alChannelsList count] > 0)];
     });
 }
 
